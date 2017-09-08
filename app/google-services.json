@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "737134846239",
+    "firebase_url": "https://notificationapp-88127.firebaseio.com",
+    "project_id": "notificationapp-88127",
+    "storage_bucket": "notificationapp-88127.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737134846239:android:bbaca63ed350b5f7",
+        "android_client_info": {
+          "package_name": "com.example.neeraj.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737134846239-3d1jssgf7r3cndlskt45as56kr8k9h7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6JI8s4DKUU7UNpLq7d6Hf48vElA_CqWU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
