@@ -10,7 +10,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
+import android.widget.Toast;
 
+import com.example.neeraj.myapplication.NotificationPackage.NotificationPojo;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -19,46 +21,69 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by Neeraj on 9/7/2017.
  */
 
 public class FcmMessagingServices extends FirebaseMessagingService {
-
+String title,message,icon;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+       // if (remoteMessage.getData().size() > 0) {
+              title = remoteMessage.getNotification().getTitle();
+              message = remoteMessage.getNotification().getBody();
+              icon = remoteMessage.getNotification().getIcon();
 
-        String title=remoteMessage.getNotification().getTitle();
-        String message=remoteMessage.getNotification().getBody();
-       String icon=remoteMessage.getNotification().getIcon();
 
+            Intent intent = new Intent(this, NotificationViewActivity.class);
+            intent.putExtra("title", title);
+            intent.putExtra("message", message);
+            intent.putExtra("icon", icon);
 
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
 
-        Intent intent = new Intent(this, NotificationViewActivity.class);
-        intent.putExtra("title",title);
-        intent.putExtra("message",message);
-        intent.putExtra("icon",icon);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent)
+                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
+            notificationManager.notify(0, notificationBuilder.build());
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
-
+            insertNotification();
+       // }
     }
+
+    private void insertNotification() {
+        ApiInterface apiInterface=ApiClient.getClient().create(ApiInterface.class);
+        Call<NotificationPojo> notificationPojoCall=apiInterface.insert(title,message,icon);
+        notificationPojoCall.enqueue(new Callback<NotificationPojo>() {
+            @Override
+            public void onResponse(Call<NotificationPojo> call, Response<NotificationPojo> response) {
+                Toast.makeText(FcmMessagingServices.this, "Inserted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<NotificationPojo> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
     public static Bitmap getBitmapFromURL(String src) {
         try {
