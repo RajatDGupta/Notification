@@ -1,7 +1,13 @@
 package com.example.neeraj.myapplication;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +21,15 @@ public class NotificationViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_view);
 
+        setTitle("notification recieve");
+
+
         textView_title=(TextView)findViewById(R.id.title);
         textView_message=(TextView)findViewById(R.id.Message);
         imageView=(ImageView) findViewById(R.id.image);
+
+
+
 
         String title=getIntent().getStringExtra("title");
         String message=getIntent().getStringExtra("message");
@@ -29,4 +41,6 @@ public class NotificationViewActivity extends AppCompatActivity {
         Glide.with(this).load(icon).into(imageView);
         //http://neerajgupta.netne.net/NotificationApp/Icons/notification.png
     }
+
+
 }

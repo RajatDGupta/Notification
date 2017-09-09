@@ -1,7 +1,11 @@
 package com.example.neeraj.myapplication;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +28,6 @@ import static android.R.attr.key;
 public class MainActivity extends AppCompatActivity {
     Button button;
     String token;
-   /* LinearLayout linearLayout;
-    TextView title,message;
-    ImageView imageView;*/
 
 
     @Override
@@ -37,27 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Main Activity");
 
         button = (Button) findViewById(R.id.button);
-       /* linearLayout=(LinearLayout)findViewById(R.id.linearLayout);
-        title=(TextView)findViewById(R.id.title);
-        message=(TextView)findViewById(R.id.Message);
-        imageView=(ImageView)findViewById(R.id.ImageView);
-
-        if(getIntent().getExtras()!=null){
-            button.setVisibility(View.GONE);
-            linearLayout.setVisibility(View.VISIBLE);
-            for(String Key: getIntent().getExtras().keySet()){
-                if(Key.equals("title")){
-                    title.setText(getIntent().getExtras().getString(Key));
-                }else if(Key.equals("message")){
-                    message.setText(getIntent().getExtras().getString(Key));
-                }else if(Key.equals("icon")){
-                    Glide.with(this).load(getIntent().getExtras().getString(Key)).into(imageView);
-                }
-            }
-        }*/
-
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,4 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
 }

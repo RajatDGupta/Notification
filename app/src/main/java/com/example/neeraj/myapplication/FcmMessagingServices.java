@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -31,19 +32,24 @@ import retrofit2.Response;
 
 public class FcmMessagingServices extends FirebaseMessagingService {
 String title,message,icon,click_action;
+
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-       // if (remoteMessage.getData().size() > 0) {
+
               title = remoteMessage.getNotification().getTitle();
               message = remoteMessage.getNotification().getBody();
-              icon = remoteMessage.getNotification().getIcon();
-              click_action = remoteMessage.getNotification().getClickAction();
+             // icon = remoteMessage.getNotification().getIcon();
+            //  click_action = remoteMessage.getNotification().getClickAction();
 
-
-            Intent intent = new Intent(click_action);
+            Intent intent = new Intent(this, NotificationViewActivity.class);
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.putExtra("icon", icon);
+
+            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+            localBroadcastManager.sendBroadcast(intent);
+
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -56,8 +62,8 @@ String title,message,icon,click_action;
                     .setContentText(message)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent)
-                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
+                    .setContentIntent(pendingIntent);
+                   // .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
 
             NotificationManager notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -65,8 +71,10 @@ String title,message,icon,click_action;
             notificationManager.notify(0, notificationBuilder.build());
 
             insertNotification();
-       // }
-    }
+
+
+        }
+
 
     private void insertNotification() {
         ApiInterface apiInterface=ApiClient.getClient().create(ApiInterface.class);
@@ -83,6 +91,8 @@ String title,message,icon,click_action;
             }
         });
     }
+
+
 
 
 
