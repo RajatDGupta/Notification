@@ -16,4 +16,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("NotificationApp/fcm_insert.php")
     Call<NotificationPojo> saveToken(@Field("fcm_token") String fcm_token);
+
+    @FormUrlEncoded
+    @POST("NotificationApp/InsertNotiFicationDetails.php")
+    Call<NotificationPojo> insert(@Field("title") String title,
+                                  @Field("message") String message,
+                                  @Field("icon_url") String icon_url);
 }

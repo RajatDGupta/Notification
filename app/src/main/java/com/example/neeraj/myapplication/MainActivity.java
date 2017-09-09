@@ -7,24 +7,57 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.neeraj.myapplication.NotificationPackage.NotificationPojo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.key;
+
 public class MainActivity extends AppCompatActivity {
     Button button;
     String token;
+   /* LinearLayout linearLayout;
+    TextView title,message;
+    ImageView imageView;*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setTitle("Main Activity");
+
         button = (Button) findViewById(R.id.button);
+       /* linearLayout=(LinearLayout)findViewById(R.id.linearLayout);
+        title=(TextView)findViewById(R.id.title);
+        message=(TextView)findViewById(R.id.Message);
+        imageView=(ImageView)findViewById(R.id.ImageView);
+
+        if(getIntent().getExtras()!=null){
+            button.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+            for(String Key: getIntent().getExtras().keySet()){
+                if(Key.equals("title")){
+                    title.setText(getIntent().getExtras().getString(Key));
+                }else if(Key.equals("message")){
+                    message.setText(getIntent().getExtras().getString(Key));
+                }else if(Key.equals("icon")){
+                    Glide.with(this).load(getIntent().getExtras().getString(Key)).into(imageView);
+                }
+            }
+        }*/
+
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.neeraj.myapplication.MainActivity"
-    android:gravity="center">
+    >
 
 
     <Button
@@ -15,4 +16,25 @@
         android:text="Button"
         />
 
+   <!-- <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/Message"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    </LinearLayout>-->
 </LinearLayout>

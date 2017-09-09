@@ -40,7 +40,10 @@
         </service>
 
         <activity android:name=".NotificationViewActivity">
-
+         <intent-filter>
+             <action android:name="com.neeraj.fcmwithMyserver_TARGET"/>
+             <category android:name="android.intent.category.DEFAULT"/>
+         </intent-filter>
         </activity>
     </application>
 

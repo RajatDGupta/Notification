@@ -30,16 +30,17 @@ import retrofit2.Response;
  */
 
 public class FcmMessagingServices extends FirebaseMessagingService {
-String title,message,icon;
+String title,message,icon,click_action;
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
        // if (remoteMessage.getData().size() > 0) {
               title = remoteMessage.getNotification().getTitle();
               message = remoteMessage.getNotification().getBody();
               icon = remoteMessage.getNotification().getIcon();
+              click_action = remoteMessage.getNotification().getClickAction();
 
 
-            Intent intent = new Intent(this, NotificationViewActivity.class);
+            Intent intent = new Intent(click_action);
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.putExtra("icon", icon);
