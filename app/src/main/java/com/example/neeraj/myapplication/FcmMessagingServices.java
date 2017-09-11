@@ -33,7 +33,6 @@ import retrofit2.Response;
 public class FcmMessagingServices extends FirebaseMessagingService {
 String title,message,icon,click_action;
 
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -53,7 +52,7 @@ String title,message,icon,click_action;
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -62,7 +61,8 @@ String title,message,icon,click_action;
                     .setContentText(message)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent);
+                    .setContentIntent(pendingIntent)
+                    ;
                    // .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
 
             NotificationManager notificationManager =
