@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("Main Activity");
 
+        if(getIntent().getExtras()!=null){
+            TextView textView=(TextView)findViewById(R.id.title);
+            textView.setText(getIntent().getStringExtra("title"));
+        }
+
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

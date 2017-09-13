@@ -34,6 +34,11 @@ public class FcmMessagingServices extends FirebaseMessagingService {
 String title,message,icon,click_action;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
               title = remoteMessage.getNotification().getTitle();
@@ -42,6 +47,7 @@ String title,message,icon,click_action;
             //  click_action = remoteMessage.getNotification().getClickAction();
 
             Intent intent = new Intent(this, NotificationViewActivity.class);
+
             intent.putExtra("title", title);
             intent.putExtra("message", message);
             intent.putExtra("icon", icon);
@@ -61,8 +67,7 @@ String title,message,icon,click_action;
                     .setContentText(message)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
-                    .setContentIntent(pendingIntent)
-                    ;
+                    .setContentIntent(pendingIntent);
                    // .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(getBitmapFromURL(icon)));
 
             NotificationManager notificationManager =
@@ -70,8 +75,9 @@ String title,message,icon,click_action;
 
             notificationManager.notify(0, notificationBuilder.build());
 
-            insertNotification();
-
+          if(!title.isEmpty()) {
+              insertNotification();
+          }
 
         }
 
